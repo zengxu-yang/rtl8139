@@ -1,0 +1,5 @@
+* Licensing Information
+
+This repository contains both instructional text and software code. They are licensed separately:
+- All text, prose, and literary content in the =/book= directory is licensed under the *Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)*.
+- All source code, scripts, and configuration files in the =/src= directory are licensed under the *GNU General Public License, version 2 (GPL-2.0)*.

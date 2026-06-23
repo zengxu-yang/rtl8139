@@ -1,0 +1,57 @@
+#+TITLE: Developing a Linux Ethernet Driver from Scratch: An RTL8139 Learning Journey
+#+AUTHOR: Zengxu Yang
+#+OPTIONS: toc:2 num:nil
+
+A 100% free, open-source, hands-on passion project documenting the process of writing a monolithic Linux network device driver from the ground up. 
+
+* Overview
+
+This repository is a self-contained learning log turned into a practical, step-by-step guide. The goal is to demystify low-level systems programming by targeting a classic, highly approachable hardware target (*Realtek RTL8139*) inside a streamlined, vintage kernel environment (*Linux 2.6.8*). 
+
+By stepping back to the mid-2000s, we bypass the immense layers of optimization and abstraction found in modern 6.x kernels, allowing us to study core subsystem concepts—like PCI matching, ring buffers, and DMA in their cleanest form.
+
+* The Development Environment & Stack
+
+This project emphasizes a highly practical, reproducible, and isolated sandbox environment.
+
+| Component           | Specification / Literature                                      |
+|---------------------+-----------------------------------------------------------------|
+| *Emulated Host*     | QEMU (Targeting physical silicon later)                        |
+| *Guest OS*          | Debian 3.1 Sarge (32-bit x86)                                   |
+| *Kernel Version*    | Linux 2.6.8                                                     |
+| *Hardware Target*   | Realtek RTL8139 (=rtl8139= emulation / Physical PCI card)       |
+| *Primary Sources*   | /Linux Device Drivers/ (LDD3)                                   |
+|                     | /Understanding the Linux Kernel/ (ULK3)                         |
+|                     | /Understanding Linux Network Internals/ (ULNI)                  |
+
+* Key Book Highlights
+
+Unlike guides that gloss environment friction, this book focuses heavily on the engineering workflow:
+
+- *Air-Gapped Engineering:* Implementing file transfers via =zmodem= (=sz=/=rz=) over a virtual serial connection. This keeps the insecure legacy VM completely isolated from the network while mimicking authentic embedded console pipelines.
+- *Modern Ergonomics on Vintage Source:* Crafting a precise =compile_commands.json= for a 20-year-old out-of-tree kernel module. This brings modern Language Server Protocol (LSP) capabilities (like semantic analysis and instantaneous "Go to Definition") to your modern host editor without =clangd= choking on legacy syntax.
+- *From Emulation to Metal:* Transitioning from an immaculate QEMU simulation to real physical PCI slots, exposing critical real-world quirks like bus-mastering permissions and CPU memory barriers (=wmb()=).
+
+* Repository Structure
+
+#+BEGIN_SRC text
+├── README.org         <- This file
+├── LICENSE.org        <- Master split-licensing overview
+├── book/              <- Instructional book text and prose
+│   ├── LICENSE-BOOK   <- Verbatim CC-BY-SA 4.0 legal text
+│   ├── ch01-setup.org
+│   └── ...
+└── src/               <- Driver source code, Makefiles, and build scripts
+    ├── LICENSE-CODE   <- Verbatim GPLv2 legal text
+    ├── driver.c
+    └── Makefile
+#+END_SRC
+
+* Licensing
+
+To respect the distinct engineering patterns of both literature and the Linux ecosystem, this repository is multi-licensed:
+
+- *The Book Content* (located within the =/book= directory) is licensed under the [[https://creativecommons.org/licenses/by-sa/4.0/][Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)]].
+- *The Driver Code & Scripts* (located within the =/src= directory) are licensed under the [[https://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GNU General Public License, Version 2 (GPL-2.0-only)]] to match compliance requirements of the Linux Kernel headers.
+
+Please see the master =LICENSE.org= or individual subdirectory license files for complete details.
