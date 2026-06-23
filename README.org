@@ -32,6 +32,41 @@ Unlike guides that gloss environment friction, this book focuses heavily on the 
 - *Modern Ergonomics on Vintage Source:* Crafting a precise =compile_commands.json= for a 20-year-old out-of-tree kernel module. This brings modern Language Server Protocol (LSP) capabilities (like semantic analysis and instantaneous "Go to Definition") to your modern host editor without =clangd= choking on legacy syntax.
 - *From Emulation to Metal:* Transitioning from an immaculate QEMU simulation to real physical PCI slots, exposing critical real-world quirks like bus-mastering permissions and CPU memory barriers (=wmb()=).
 
+* Building the Book
+
+The technical manual layout is written in Emacs Org-mode and compiled through a fully automated headless pipeline. The build scripts eliminate local configuration dependency, allowing the text to render identically on any compliant machine.
+
+** Prerequisites
+
+To compile the book documentation layout locally on a Debian 13 (Trixie) host system, you must install the following core formatting engines, fonts, and compilers:
+
+#+BEGIN_SRC sh
+sudo apt install emacs-noui texlive-xetex fonts-linuxlibertine fonts-firacode
+#+END_SRC
+
+** Compilation Commands
+
+All generation routines are driven via the local =Makefile=. Navigate to the =/book= subdirectory and execute the relevant target rule:
+
+- *Build Everything:* Generate both clean HTML and polished PDF outputs simultaneously.
+  #+BEGIN_SRC sh
+  make all
+  #+END_SRC
+
+- *Build PDF Only:* Invoke Emacs batch-mode to translate =book.org= into a pristine LaTeX buffer  and process it with =xelatex= to output =book.pdf=.
+  #+BEGIN_SRC sh
+  make pdf
+  #+END_SRC
+
+- *Build HTML Only:* Export the raw structure into a lightweight, standalone =book.html= web version.
+  #+BEGIN_SRC sh
+  make html
+  #+END_SRC
+
+- *Workspace Cleanup:* Flush intermediate auxiliary files, logs, and temporary build debris to reset the repository directory status.
+  #+BEGIN_SRC sh
+  make clean
+  #+END_SRC
 * Repository Structure
 
 #+BEGIN_SRC text
