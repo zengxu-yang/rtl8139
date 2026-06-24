@@ -21,9 +21,16 @@
 #+latex_header: \usepackage[margin=1.0in]{geometry}
 #+latex_header: \usepackage{parskip}
 
-# ---- Force Inline Monospace to Wrap Anywhere Safely ----
+# ---- Force Inline Monospace to Wrap Safely at Punctuation ----
 #+latex_header: \usepackage{xpatch}
-#+latex_header: \xapptocmd{\ttfamily}{\XeTeXlinebreaklocale "zh"}{}{}
+#+latex_header: \newXeTeXintercharclass\InlineCodeBreaks
+#+latex_header: \XeTeXcharclass `/ \InlineCodeBreaks
+#+latex_header: \XeTeXcharclass `- \InlineCodeBreaks
+#+latex_header: \XeTeXcharclass `_ \InlineCodeBreaks
+#+latex_header: \XeTeXcharclass `. \InlineCodeBreaks
+#+latex_header: \XeTeXcharclass `= \InlineCodeBreaks
+#+latex_header: \XeTeXinterchartoks \InlineCodeBreaks 0 = {\allowbreak}
+#+latex_header: \xapptocmd{\ttfamily}{\XeTeXinterchartokenstate=1 \spaceskip=\fontdimen2\font plus 0.1em minus 0.05em}{}{}
 
 # ---- Link & Hyperref Styling ----
 #+latex_header: \usepackage{xcolor}

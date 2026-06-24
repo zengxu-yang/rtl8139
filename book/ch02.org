@@ -92,9 +92,20 @@ It is almost done. There are still some miscellaneous configurations.
 	8139cp
       #+end_src
    4. Reboot the VM and confirm that the builtin driver is blacklisted by =lsmod | grep 8139=.
-3. Since we blacklisted the builtin Ethernet driver, the VM does not have a network connection. To share files between the host computer and the VM, we will use a serial utility.
-   1. Shut down the VM and click the lightbulb icon. Click "Add Hardware" and then click "Serial". In "Device Type", select "Pseudo TTY (pty)". A device named "Serial 2" is added.
-   2. Start the VM. Make sure your account is in group =dialout= by running command =groups= to check. If not, run =sudo adduser zengxu dialout=, replacing =zengxu= with your account name.
-   3. Install =lrzsz= by =sudo apt-get install lrzsz= on the VM and =sudo apt install lrzsz= on the host computer. Create scripts =send_to_host.sh=, =recv_from_host.sh= on the VM and =send_to_vm.sh=, =recv_from_vm.sh= on the host computer. To send a file from the host computer to the VM, run =./recv_from_host.sh= on the VM and then run =sudo ./send_to_vm.sh <file>=. To send a file from the VM to the host computer, run =sudo ./recv_from_vm.sh= on the host computer and =./send_to_host.sh <file>= on the VM.
+3. Since we blacklisted the builtin Ethernet driver, the VM does not have a network connection. To share files between the host computer and the VM, we will use a virtual USB drive.
+   1. On the host computer, run =dd if=/dev/zero of=/home/zengxu/Projects/shared_storage.img bs=1M count=512= to create a 512 MiB image.
+   2. Run =sudo virsh attach-disk Debian_Sarge /home/zengxu/Projects/shared_storage.img sda --driver qemu --type disk --subdriver raw --targetbus usb --live= to create a live USB drive on the VM.
+   3. Run =dmesg | tail -n 20= to make sure it is detected by the kernel on the VM. You should also see a device file =/dev/sda=.
+   4. Run =sudo apt-get install dosfstools= to install =mkfs.vfat=.
+   5. Format the virtual USB drive by =sudo mkfs.vfat -I -F 32 /dev/sda=.
+   6. Mount the virtual USB drive by:
+      #+begin_src bash
+	sudo mkdir /mnt/storage
+	sudo mount -t vfat /dev/sda /mnt/storage/
+      #+end_src
+   7. Verify the mount by =df -h=.
+   8. On the host, make two scripts executable by =chmod +x grab_from_vm.sh return_to_vm.sh=.
+   9. To unmount the disk from the VM and mount it on the host computer. Enter =sync;sudo umount /mnt/storage= on the VM and execute =./grab_from_vm.sh= on the host computer. It will be mounted at =/mnt/shared_storage=.
+   10. To remount the disk on the VM, execute =./return_to_vm.sh=. If you installed Gnome desktop, the VM may automount it at =/media/usbdisk=. If not, just mount it manually. You can share files between the host computer and the VM offline using this method.
 
 [fn:mib] A GiB (Gibibyte) or MiB (Mebibyte) is a binary unit of digital information defined by the IEC. Unlike decimal Megabytes (MB) which use powers of 10 ($10^6$ bytes), binary units are based on powers of 2, where $1 \text{ MiB} = 2^{20}$ bytes (1,048,576 bytes). Technical systems like the Linux kernel measure memory this way.
