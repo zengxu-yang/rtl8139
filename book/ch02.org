@@ -69,6 +69,9 @@ Optionally, you can install a GUI desktop environment.
     [[./images/os-desktop.png]]
 
 ** Miscellaneous
+:PROPERTIES:
+:CUSTOM_ID: sec:miscellaneous
+:END:
 It is almost done. There are still some miscellaneous configurations.
 
 1. You need to make your account a sudoer in order to use =sudo=. First run =su -= and enter the root password. Then edit =/etc/sudoers= with your favorite editor. Add a line like =zengxu ALL=(ALL) ALL= where you should replace =zengxu= with your account name.

@@ -15,6 +15,7 @@
 #+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase]
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{minted}
+#+latex_header: \usemintedstyle{perldoc}
 
 # ---- Page Layout & Margins ----
 #+latex_header: \usepackage[margin=1.0in]{geometry}

@@ -20,14 +20,14 @@ $(HTML_OUT): $(SOURCE)
 		--visit=$(SOURCE) \
 		--funcall org-html-export-to-html
 
-# Export to PDF via LaTeX (No \part tags)
+# Export to PDF via LaTeX (No \part tags - Latexmk Quiet Multi-Pass)
 pdf: $(PDF_OUT)
 
 $(PDF_OUT): $(SOURCE)
 	@echo "Exporting $(SOURCE) to PDF..."
 	$(EMACS) $(EMACSOPTS) \
 		--visit=$(SOURCE) \
-		--eval '(progn (setq org-latex-listings '"'"'minted) (setq org-latex-minted-options '"'"'(("frame" "lines") ("fontsize" "\\footnotesize") ("linenos" "true") ("breaklines" "true"))) (setq org-latex-pdf-process '"'"'("xelatex -shell-escape -interaction=nonstopmode -output-directory=%o %f" "xelatex -shell-escape -interaction=nonstopmode -output-directory=%o %f")))' \
+		--eval '(progn (setq org-latex-remove-logfiles nil) (setq org-latex-listings '"'"'minted) (setq org-latex-minted-options '"'"'(("frame" "lines") ("fontsize" "\\footnotesize") ("linenos" "true") ("breaklines" "true"))) (setq org-latex-pdf-process '"'"'("latexmk -xelatex -silent -shell-escape -interaction=nonstopmode -output-directory=%o %f")))' \
 		--funcall org-latex-export-to-pdf
 
 # Clean up build artifacts and LaTeX intermediate debris
