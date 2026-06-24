@@ -84,9 +84,11 @@ All generation routines are driven via the local =Makefile=. Navigate to the =/b
 
 * Licensing
 
-To respect the distinct engineering patterns of both literature and the Linux ecosystem, this repository is multi-licensed:
+To respect the distinct engineering patterns of literature, hardware interface drivers, and system integration automation, this repository uses a three-way licensing split. Note that the =/src= directory is multi-licensed, containing both copyleft kernel-space driver code and public domain helper scripts:
 
 - *The Book Content* (located within the =/book= directory) is licensed under the [[https://creativecommons.org/licenses/by-sa/4.0/][Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)]].
-- *The Driver Code & Scripts* (located within the =/src= directory) are licensed under the [[https://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GNU General Public License, Version 2 (GPL-2.0-only)]] to match compliance requirements of the Linux Kernel headers.
+- *The Driver Code* (C driver source files, such as =driver.c=, located within the =/src= directory) is licensed under the [[https://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GNU General Public License, Version 2 (GPL-2.0-only)]] to match copyleft rules of the Linux kernel headers.
+- *The Build Scripts & Configurations* (such as custom Makefiles, helper shell scripts, and environment configurations located within the =/src= directory) are dedicated to the public domain under the [[https://creativecommons.org/publicdomain/zero/1.0/][Creative Commons CC0 1.0 Universal Public Domain Dedication (CC0-1.0)]].
+- /Note on Exceptions:/ Third-party configuration assets fetched from upstream repositories (like the Linux kernel's own =.clang-format= file within =/src=) are exempt from CC0 and preserve their original copyleft licenses (e.g., =GPL-2.0-only=) as shown in their headers.
 
-Please see the master =LICENSE.org= or individual subdirectory license files for complete details.
+Please see the master =LICENSE.org= for detailed specifications.

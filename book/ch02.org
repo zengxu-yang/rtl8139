@@ -1,6 +1,6 @@
 * Setup
-** Host
-The host computer is a PC running any modern Linux distributions. Make sure it supports virtualization as we will use QEMU/KVM to run a Debian Sarge VM. I use Debian Trixie. The instructions in this book are based on Debian Trixie. You may need to adjust them slightly if you use a different Linux distribution.
+** The Host Computer
+The host computer is a PC running a modern Linux distribution. Make sure it supports virtualization as we will use QEMU/KVM to run a Debian Sarge VM. I use Debian Trixie. The instructions in this book are based on Debian Trixie. You may need to adjust them slightly if you use a different Linux distribution.
 
 In Debian Trixie, install the following packages:
 #+begin_src bash

@@ -1,5 +1,22 @@
 * Licensing Information
 
-This repository contains both instructional text and software code. They are licensed separately:
-- All text, prose, and literary content in the =/book= directory is licensed under the *Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)*.
-- All source code, scripts, and configuration files in the =/src= directory are licensed under the *GNU General Public License, version 2 (GPL-2.0)*.
+This repository is a mixed-media project containing instructional prose, source code, and automation scripts. To accommodate the distinct legal requirements and developer ergonomics of these domains, the repository uses a three-way licensing split:
+
+** 1. Prose & Documentation
+- *Scope:* All files located within the =/book= directory (including =.org= chapter sources, bibliography files, and embedded diagrams).
+- *License:* [[https://creativecommons.org/licenses/by-sa/4.0/][Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)]].
+- This copyleft license allows you to freely share, modify, and build upon the text, provided you give appropriate attribution and distribute your contributions under the exact same terms.
+
+** 2. Driver Source Code
+- *Scope:* Core Linux kernel module C source files inside the =/src= directory (e.g., =rtl8139_driver.c=).
+- *License:* [[https://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GNU General Public License, Version 2 (GPL-2.0-only)]].
+- This copyleft protection ensures absolute compliance and structural compatibility with the upstream Linux Kernel codebase when importing headers.
+
+** 3. Build Scripts & Custom Configurations
+- *Scope:* All custom automation scripts, local Makefiles, synchronization templates (such as =send_to_vm.sh=, =recv_from_host.sh=), and editor setup configurations.
+- *License:* [[https://creativecommons.org/publicdomain/zero/1.0/][Creative Commons CC0 1.0 Universal Public Domain Dedication (CC0-1.0)]].
+- These supporting tools are dedicated to the public domain. You may copy, modify, distribute, and perform these assets without seeking permission, providing attribution, or worrying about restrictive license compliance.
+
+** 4. Exceptions for Upstream Third-Party Assets
+- *Scope:* Configuration or rule files imported directly from upstream projects (such as the Linux kernel's official =.clang-format= file).
+- *License:* These assets strictly retain their original upstream licensing terms (e.g., =GPL-2.0-only=), as declared within their own embedded SPDX license identifier headers.
