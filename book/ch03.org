@@ -74,3 +74,5 @@ You need to install and prepare the kernel source on the VM.
    Congratulations! Your first driver in running. The =no version= and =kernel tainted= warnings are normal for our driver.
 ** Navigating the Source Code
 To understand how our bare minimum driver works, we need to read its source code, including the kernel source it uses. We will use =eglot= and =clangd= as a code reading tool. See [[#sec:lsp]] on how to set them up.
+
+There is an issue. Debian Sarge is very old and does not support many LSP utilities like =bear= or modern kernel LSP utilities. To use LSP, we can dry run the driver build and convert it to modern =compile_commands.json=.

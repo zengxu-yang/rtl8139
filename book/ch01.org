@@ -3,3 +3,46 @@
 This free book is my notes about my own journey of learning Linux Ethernet driver delveopment. It is shared here because I hope it will be useful for other learners. Linux driver development is often seen as a daunting work and I hope this is a good starting point. I'll keep it hands-on and easy to follow.
 
 For many beginners, the most difficult part is not learning the concepts, but setting up a working environment. This book tries to be a practical guide instead of focusing on theories. I will try to be attentive to all the quirky details so that everything just works. Of course, you can create your own workflow that suits you better. This is just for your reference. The most important thing is that you should get your hands dirty and start playing with it.
+** The Power of Real Hardware: Why the RTL8139 Matters
+
+In kernel development literature, authors frequently rely on "dummy" or "virtual" devices (such as a basic memory loopback character driver) to teach the basics. While these examples are simple, they skip the hardest---and most rewarding---parts of systems engineering.
+
+By writing a driver for a real PCI device, the RTL8139, this book exposes you to the actual engineering challenges of low-level hardware orchestration.
+
+
+*** The "Dummy Driver" Gap vs. Real-World Engineering
+
+A typical virtual character device operates entirely in CPU memory. It abstracts away the hardware, leaving a massive gap in a developer's understanding:
+
+#+attr_latex: :align |p{0.18\textwidth}|p{0.36\textwidth}|p{0.41\textwidth}
+| Concept                   | Dummy / Virtual Device                                            | Real Hardware (RTL8139)                                                                                                                                         |
+|---------------------------+-------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *System Bus Interconnect* | None. Created programmatically via kernel APIs.                   | *The PCI Bus.* Requires probing configuration space, checking Vendor/Device IDs, and claiming active BARs (Base Address Registers).                             |
+| *Hardware Communication*  | Simple =memcpy= operations between user space and kernel buffers. | *Register-Level I/O.* Reading and writing physical bits to Memory-Mapped I/O (MMIO) and Port I/O addresses using commands like =outb()= and =readl()=.          |
+| *Asynchronous Events*     | Software-driven loops or timers.                                  | *Hardware Interrupts (IRQs).* Registering a physical Interrupt Service Routine (ISR) to handle hardware-triggered physical line changes.                        |
+| *Data Transfer*           | Double-buffering data using the CPU's processing power.           | *Direct Memory Access (DMA).* Allocating coherent physical memory ring buffers so the network card can stream packets directly to RAM without CPU intervention. |
+
+
+*** Why the RTL8139 is the Perfect Pedagogical Hardware
+
+Choosing the RTL8139 card as our target is highly deliberate. It represents the perfect sweet spot for systems education:
+
+
+**** Simple, Readable Registers
+
+Unlike modern gigabit cards (like Intel's =e1000e= or Realtek's =r8169=) which use incredibly complex ring descriptor architectures and high-overhead command queues, the RTL8139 belongs to an era of straightforward register-level programming. You can configure transmission, reception, and packet-polling directly by reading and writing to clearly defined offsets.
+
+
+**** A Pure DMA Architecture
+
+The RTL8139 forces the student to learn physical DMA mapping. You must allocate a contiguous chunk of physical memory on the host, hand that physical pointer to the network card's registers, and watch the hardware write incoming packets directly into that memory ring buffer. This is how high-speed networking actually works.
+
+
+**** Excellent Documentation
+
+The RTL8139 datasheet is freely available and relatively short (under 60 pages). Unlike modern hardware manuals that span thousands of pages of obscure enterprise specifications, a single developer can read, comprehend, and completely implement the RTL8139 hardware specification from cover to cover.
+
+
+**** Flawless QEMU Emulation
+
+Because the RTL8139 was one of the most widely deployed Ethernet cards of the late 1990s and early 2000s, its hardware dynamics are emulated with extreme precision by QEMU. This allows us to write register-level code against "virtual hardware" that behaves identically to the physical silicon, without requiring you to buy old PCI hardware or risk bricking your host development machine.

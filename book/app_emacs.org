@@ -38,9 +38,11 @@ In the root directory of your project, enter
 #+begin_src text
   curl -o .clang-format https://raw.githubusercontent.com/torvalds/linux/master/.clang-format
 #+end_src
-to install the Linux kernel style file. After that, you C files in the current project will automatically use the Linux kernel style upon saving.
+to download the Linux kernel style file. After that, you C files in the current project will automatically use the Linux kernel style upon saving.
 ** Code Navigation
 :PROPERTIES:
 :CUSTOM_ID: sec:lsp
 :END:
 Tags based code navigation used to be popular, but the modern way is using a Language Server Protocol (LSP) like =clangd=. Emacs natively supports LSP via =eglot=.
+1. Install =clangd= by =sudo apt install clangd=.
+2. Set a c-mode hook in Emacs. Enter =C-h v= then =c-mode-hook=. Add =eglot-ensure= as a hook. After setting it up, =eglot= will be used for every C source file.
