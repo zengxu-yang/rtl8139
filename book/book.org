@@ -1,7 +1,12 @@
 #+title: Linux Ethernet Driver From Scratch
+#+subtitle: Revision {{{revision}}}
 #+author: Zengxu Yang
+#+options: toc:nil date:nil
 #+latex_class: report-no-parts
 #+latex_compiler: xelatex
+
+# ---- Single Source of Truth for Versioning ----
+#+macro: revision 0.1 (June 2026)
 
 # ---- Typography Configuration ----
 #+latex_header: \usepackage{fontspec}
@@ -18,6 +23,48 @@
 #+latex_header: \definecolor{internalblue}{rgb}{0.10, 0.29, 0.56}
 #+latex_header: \definecolor{externalteal}{rgb}{0.00, 0.48, 0.47}
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal}
+
+# ---- Copyright / Colophon Page ----
+#+begin_export latex
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{small}
+#+end_export
+
+*Linux Ethernet Driver From Scratch* \\
+An RTL8139 Learning Journey
+
+*Revision:* {{{revision}}} \\
+© 2026 Zengxu Yang. Some rights reserved.
+
+#+begin_export latex
+\vspace{1cm}
+#+end_export
+
+*Licensing Notices:*
+
+This book is a 100% free, open-source passion project. To support the distinct engineering patterns of both literature and software development, the contents of this project are split under two separate licenses:
+
+- *Documentation & Prose:* All instructional text, explanations, and literary content are licensed under the *Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)*. To view a copy of this license, visit [[https://creativecommons.org/licenses/by-sa/4.0/]].
+- *Source Code & Scripts:* All functional driver software, Makefiles, and configuration templates are licensed under the *GNU General Public License, Version 2 (GPL-2.0-only)* to maintain structural compatibility with the Linux Kernel source tree.
+
+#+begin_export latex
+\vspace{1cm}
+#+end_export
+
+*Source Repository:* \\
+The complete source files, historical learning logs, and compilation environments for this book can be cloned and audited publicly on GitHub at: \\
+[[https://github.com/zengxu-yang/rtl8139]]
+
+#+begin_export latex
+\vfill
+\textit{First edition electronic printing, June 2026.}
+\end{small}
+\clearpage
+#+end_export
+
+# ---- Table of Contents ----
+#+toc: headlines 2
 
 # ---- Chapters ----
 #+include: "ch01.org"

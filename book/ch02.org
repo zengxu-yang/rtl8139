@@ -3,3 +3,7 @@
 The host computer is a PC running any modern Linux distributions. I use Debian Trixie. The instructions in this book are based on Debian Trixie. You may need to adjust slightly if you use a different Linux distribution.
 ** QEMU
 This driver runs on Linux kernel 2.6. The easiest way to develop it is creating a QEMU virtual machine that runs Debian 3.1 Sarge, which contains Linux kernel 2.6.8.
+
+Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download them from [[https://archive.org/details/debian-sarge-r8-32bit][Internet Archive]].
+
+
