@@ -41,7 +41,7 @@ The technical manual layout is written in Emacs Org-mode and compiled through a 
 To compile the book documentation layout locally on a Debian 13 (Trixie) host system, you must install the following core formatting engines, fonts, and compilers:
 
 #+BEGIN_SRC sh
-sudo apt install emacs-noui texlive-xetex fonts-linuxlibertine fonts-firacode
+sudo apt install emacs-noui texlive-xetex fonts-linuxlibertine fonts-firacode latexmk
 #+END_SRC
 
 ** Compilation Commands

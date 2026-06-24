@@ -39,3 +39,8 @@ In the root directory of your project, enter
   curl -o .clang-format https://raw.githubusercontent.com/torvalds/linux/master/.clang-format
 #+end_src
 to install the Linux kernel style file. After that, you C files in the current project will automatically use the Linux kernel style upon saving.
+** Code Navigation
+:PROPERTIES:
+:CUSTOM_ID: sec:lsp
+:END:
+Tags based code navigation used to be popular, but the modern way is using a Language Server Protocol (LSP) like =clangd=. Emacs natively supports LSP via =eglot=.

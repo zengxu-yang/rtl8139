@@ -39,5 +39,38 @@ We are writing a bare minimum RTL8139 driver. It does nothing but announces its 
   clean:
   	$(MAKE) -C $(KDIR) M=$(PWD) clean
 #+end_src
-** Transfer The Program
+** Transferring The Program
 After creating our first driver on the host computer, we will send it to the VM to build and run. See Section [[#sec:miscellaneous]] for details.
+
+Enter =mkdir ~/rtl8139= on the VM. You also need to create =~/rtl8139/recv_from_host.sh= on the VM. This is the only file that you need to create manually.
+
+You need to install and prepare the kernel source on the VM.
+
+1. Run =uname -r= to be sure that your Debian Sarge VM runs kernel 2.6.8.
+2. Enter =sudo apt-get install kernel-source-2.6.8= to install the kernel source. The installer may ask you to change to a different DVD ISO file in virt-manager.
+3. Run the following commands to extract the kernel source, configure it and prepare it for kernel modules. This creates files and directories like =include/linux/autoconf.h= and =include/asm= to build out-of-tree kernel modules.
+   #+begin_src bash
+     cd /usr/src
+     sudo tar -jxf kernel-source-2.6.8.tar.bz2
+     sudo chown -R zengxu:zengxu kernel-source-2.6.8
+     cd kernel-source-2.6.8
+     cp /boot/config-2.6.8-4-386 .config
+     make oldconfig
+     make modules_prepare
+   #+end_src
+4. Connect the module Makefile to the kernel source tree by:
+   #+begin_src bash
+     ln -s /usr/src/kernel-source-2.6.8 /lib/modules/2.6.8-4-386/build
+   #+end_src
+5. Copy files in =src/ch03= from the host to =~/rt8139= on the VM.
+6. Build the driver in =~/rtl8139= by =make=.
+7. Run it by =sudo insmod rtl8139_driver.ko=. Run =lsmod | grep 8139= to confirm that your driver is loaded. Then remove it by =sudo rmmod rtl8139=.
+8. See its prints by =dmesg | tail=. You should see lines like:
+   #+begin_src text
+     rtl8139_driver: no version for "struct_module" found: kernel tainted.
+     rtl8139: Driver module loaded successfully.
+     rtl8139: Driver module unloaded.
+   #+end_src
+   Congratulations! Your first driver in running. The =no version= and =kernel tainted= warnings are normal for our driver.
+** Navigating the Source Code
+To understand how our bare minimum driver works, we need to read its source code, including the kernel source it uses. We will use =eglot= and =clangd= as a code reading tool. See [[#sec:lsp]] on how to set them up.
