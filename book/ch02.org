@@ -7,15 +7,41 @@ In Debian Trixie, install the following packages:
   sudo apt install virt-manager
 #+end_src
 ** QEMU
+*** Preparation
 This driver runs on Linux kernel 2.6. The easiest way to develop it is creating a QEMU virtual machine that runs Debian 3.1 Sarge, which contains Linux kernel 2.6.8.
 
 Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download them from [[https://archive.org/details/debian-sarge-r8-32bit][Internet Archive]].
 
+*** VM Creation
 After downloading the ISO files, open =virt-manager= and create a virtual machine follwing the steps below.
 1. Choose "Local install media (ISO image or CDROM)", then click "Forward".
 2. Click "Browse" and choose "debian-31r8-i386-binary-1-CD.iso" file just downloaded. Click "Open". Uncheck "Automatically detect from the installation media/source" and type "generic" to choose "Generic or unknown OS. Usage is not recommended". Click "Forward".
 3. Set "Memory" to 512 MiB[fn:mib] and "CPUs" to 1. Click "Forward".
 4. In "Create a disk image for the virtual machine", set it to 10.0 GiB. Click "Forward".
 5. In "Name", type a name without spaces, such as "Debian_Sarge". Check "Customize configuration before install". Click "Finish".
+6. Click "NIC ...", select "rtl8139" in "Device model". Click "Apply". This is the network card we will develop a driver for.
+7. Click "Video QXL", select "VGA" in "Model". Click "Apply". Debian Sarge does not work on modern video emulation.
+8. Click "Tablet", then click "Remove". Debian Sarge does not understand "Absolute Movement".
+9. Click "Begin Installation" to install Debian Sarge.
+
+*** OS Installation
+When installing Debian Sarge:
+1. At the boot prompt, do not press Enter. Type =linux26=. Debian Sarge supports both Linux kernel 2.4 and 2.6.
+2. In "Choose a language", choose your language. This book is based on English.
+3. In "Partition method", it is recommended to select "Erase entire disk".
+4. In "Partition scheme", it is recommended to select "All files in one partition".
+5. In "Install the GRUB boot loader to the master boot record", choose "Yes". Those OS will reboot and continue configurations.
+6. In "Time zone configuration", "Is the hardware clock set to GMT?", choose "No". =virt-manager= uses UTC clock by default.
+7. In "Archive access method for apt", choose "cdrom". Debian Sarge is too old to find online package repos.
+8. Click the lightbulb icon of the virtual machine, then click "IDE CDROM 1". In "Source path", browse to your downloaded file =debian-31r8-i386-binary-1-DVD.iso=. Click "Apply". Click the monitor icon and in "CD-ROM device file", choose the default one.
+9. In "Scan another CD?", click the lightbulb icon of the virtual machine, then click "IDE CDROM 1". In "Source path", browse to your downloaded file =debian-31r8-i386-binary-2-DVD.iso=. Click "Apply". Click the monitor icon and choose "Yes".
+10. Debian Sarge will then ask you to insert the first DVD.
+11. In =Choose software to install=, you can skip them now. Optionally, you can select "Desktop environment" if you prefer a desktop environment.
+12. In "General type of mail configuration", choose "no configuration at this time".
+13. The installation and setup is mostly done. You will be greeted by a login prompt.
+    #+caption: Debian Sarge VM
+    #+name: fig:debian_sarge_vm
+    #+attr_latex: :width 0.9\textwidth :placement [htbp]
+    [[./images/os-install.png]]
 
 [fn:mib] A GiB (Gibibyte) or MiB (Mebibyte) is a binary unit of digital information defined by the IEC. Unlike decimal Megabytes (MB) which use powers of 10 ($10^6$ bytes), binary units are based on powers of 2, where $1 \text{ MiB} = 2^{20}$ bytes (1,048,576 bytes). Technical systems like the Linux kernel measure memory this way.
