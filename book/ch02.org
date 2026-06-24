@@ -15,7 +15,7 @@ Before installing a VM, we need to first download Debian Sarge ISO files for the
 *** VM Creation
 After downloading the ISO files, open =virt-manager= and create a virtual machine follwing the steps below.
 1. Choose "Local install media (ISO image or CDROM)", then click "Forward".
-2. Click "Browse" and choose "debian-31r8-i386-binary-1-CD.iso" file just downloaded. Click "Open". Uncheck "Automatically detect from the installation media/source" and type "generic" to choose "Generic or unknown OS. Usage is not recommended". Click "Forward".
+2. Click "Browse" and choose the "debian-31r8-i386-binary-1-CD.iso" file just downloaded. Click "Open". Uncheck "Automatically detect from the installation media/source" and type "generic" to choose "Generic or unknown OS. Usage is not recommended". Click "Forward".
 3. Set "Memory" to 512 MiB[fn:mib] and "CPUs" to 1. Click "Forward".
 4. In "Create a disk image for the virtual machine", set it to 10.0 GiB. Click "Forward".
 5. In "Name", type a name without spaces, such as "Debian_Sarge". Check "Customize configuration before install". Click "Finish".
@@ -36,12 +36,62 @@ When installing Debian Sarge:
 8. Click the lightbulb icon of the virtual machine, then click "IDE CDROM 1". In "Source path", browse to your downloaded file =debian-31r8-i386-binary-1-DVD.iso=. Click "Apply". Click the monitor icon and in "CD-ROM device file", choose the default one.
 9. In "Scan another CD?", click the lightbulb icon of the virtual machine, then click "IDE CDROM 1". In "Source path", browse to your downloaded file =debian-31r8-i386-binary-2-DVD.iso=. Click "Apply". Click the monitor icon and choose "Yes".
 10. Debian Sarge will then ask you to insert the first DVD.
-11. In =Choose software to install=, you can skip them now. Optionally, you can select "Desktop environment" if you prefer a desktop environment.
+11. In =Choose software to install=, leave them unselected.
 12. In "General type of mail configuration", choose "no configuration at this time".
-13. The installation and setup is mostly done. You will be greeted by a login prompt.
+13. The OS installation and setup is done. You will be greeted by a login prompt.
     #+caption: Debian Sarge VM
     #+name: fig:debian_sarge_vm
     #+attr_latex: :width 0.9\textwidth :placement [htbp]
     [[./images/os-install.png]]
+
+*** (Optional) Desktop Installation
+Optionally, you can install a GUI desktop environment.
+1. Login as root, run =apt-get install x-window-system-core gnome-desktop-environment xscreensaver gdm= to install the Gnome desktop.
+2. In "Do you want to entrust font management to defoma", choose "Yes".
+3. In "Do you want the cdrecord binaries to be installed SUID root?", choose "No".
+4. In "Please choose your sound daemon's dsp wrapper", choose "none".
+5. In "Which paper size should be the system default", choose your paper size. I use "a4".
+6. In "Attempt to autodetect video hardware?", choose "No".
+7. In "Select the desired X server driver", choose "vesa".
+8. In "Please select the XKB rule set to use.", type "xfree86".
+9. In "Please select your keyboard model.", type "pc104".
+10. In "Please select your keyboard layout.", type your keyboard layout. I typed "us".
+11. In "Please choose your mouse port.", choose "/dev/input/mice".
+12. In "Is your monitor an LCD device?", choose "No".
+13. In "Please choose a method for selecting your monitor characteristics.", choose "Simple".
+14. In "Please choose your approximate monitor size.", choose "17 inches (430 mm)".
+15. In "Select the video modes you would like the X server to use", check "1024x768".
+16. In "Please select your desired default color depth in bits.", choose "24".
+17. The desktop environment will be installed. After that, reboot your VM and you will be greeted by a login window. Log in with your credential and you then enter a beautiful early Debian Gnome desktop environment.
+    #+caption: Debian Sarge Desktop
+    #+name: fig:debian_sarge_desktop
+    #+attr_latex: :width 0.9\textwidth :placement [htbp]
+    [[./images/os-desktop.png]]
+
+** Miscellaneous
+It is almost done. There are still some miscellaneous configurations.
+
+1. You need to make your account a sudoer in order to use =sudo=. First run =su -= and enter the root password. Then edit =/etc/sudoers= with your favorite editor. Add a line like =zengxu ALL=(ALL) ALL= where you should replace =zengxu= with your account name.
+2. Blacklist the builtin RTL8139 driver so that you can work on your own driver without worrying about conflicts.
+   1. Unload the builtin driver.
+      #+begin_src text
+	sudo rmmod 8139too
+	sudo rmmod 8139cp
+      #+end_src
+   2. Enter =sudo vi /etc/modprobe.conf= and add
+      #+begin_src text
+	install 8139too /bin/true
+	install 8139cp /bin/true
+      #+end_src
+   3. Enter =sudo nano /etc/hotplug/blacklist= and add
+      #+begin_src text
+	8139too
+	8139cp
+      #+end_src
+   4. Reboot the VM and confirm that the builtin driver is blacklisted by =lsmod | grep 8139=.
+3. Since we blacklisted the builtin Ethernet driver, the VM does not have a network connection. To share files between the host computer and the VM, we will use a serial utility.
+   1. Shut down the VM and click the lightbulb icon. Click "Add Hardware" and then click "Serial". In "Device Type", select "Pseudo TTY (pty)". A device named "Serial 2" is added.
+   2. Start the VM. Make sure your account is in group =dialout= by running command =groups= to check. If not, run =sudo adduser zengxu dialout=, replacing =zengxu= with your account name.
+   3. Install =lrzsz= by =sudo apt-get install lrzsz= on the VM and =sudo apt install lrzsz= on the host computer. Create scripts =send_to_host.sh=, =recv_from_host.sh= on the VM and =send_to_vm.sh=, =recv_from_vm.sh= on the host computer. To send a file from the host computer to the VM, run =./recv_from_host.sh= on the VM and then run =sudo ./send_to_vm.sh <file>=. To send a file from the VM to the host computer, run =sudo ./recv_from_vm.sh= on the host computer and =./send_to_host.sh <file>= on the VM.
 
 [fn:mib] A GiB (Gibibyte) or MiB (Mebibyte) is a binary unit of digital information defined by the IEC. Unlike decimal Megabytes (MB) which use powers of 10 ($10^6$ bytes), binary units are based on powers of 2, where $1 \text{ MiB} = 2^{20}$ bytes (1,048,576 bytes). Technical systems like the Linux kernel measure memory this way.

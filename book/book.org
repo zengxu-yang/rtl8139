@@ -19,6 +19,10 @@
 #+latex_header: \usepackage[margin=1.0in]{geometry}
 #+latex_header: \usepackage{parskip}
 
+# ---- Force Inline Monospace to Wrap Anywhere Safely ----
+#+latex_header: \usepackage{xpatch}
+#+latex_header: \xapptocmd{\ttfamily}{\XeTeXlinebreaklocale "zh"}{}{}
+
 # ---- Link & Hyperref Styling ----
 #+latex_header: \usepackage{xcolor}
 #+latex_header: \definecolor{internalblue}{rgb}{0.10, 0.29, 0.56}
