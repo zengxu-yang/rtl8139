@@ -2,4 +2,4 @@
 ** Rationale
 This free book is my notes about my own journey of learning Linux Ethernet driver delveopment. It is shared here because I hope it will be useful for other learners. Linux driver development is often seen as a daunting work and I hope this is a good starting point. I'll keep it hands-on and easy to follow.
 
-For many beginners, the most difficult part is not learning the concepts, but setting up a working environment. I will try to be attentive to all the quirky details so that everything just works. Of course, you can create your own workflow that suits you. This is just for your reference.
+For many beginners, the most difficult part is not learning the concepts, but setting up a working environment. This book tries to be a practical guide instead of focusing on theories. I will try to be attentive to all the quirky details so that everything just works. Of course, you can create your own workflow that suits you better. This is just for your reference. The most important thing is that you should get your hands dirty and start playing with it.

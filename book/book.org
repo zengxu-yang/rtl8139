@@ -1,7 +1,7 @@
 #+title: Linux Ethernet Driver From Scratch
 #+subtitle: Revision {{{revision}}}
 #+author: Zengxu Yang
-#+options: toc:nil date:nil
+#+options: toc:nil date:nil ^:nil ':t
 #+latex_class: report-no-parts
 #+latex_compiler: xelatex
 
@@ -13,6 +13,7 @@
 #+latex_header: \setmainfont{Linux Libertine O}
 #+latex_header: \setsansfont{Linux Biolinum O}
 #+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase]
+#+latex_header: \usepackage{amsmath}
 
 # ---- Page Layout & Margins ----
 #+latex_header: \usepackage[margin=1.0in]{geometry}

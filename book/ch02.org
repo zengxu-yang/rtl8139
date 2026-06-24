@@ -1,9 +1,21 @@
 * Setup
 ** Host
-The host computer is a PC running any modern Linux distributions. I use Debian Trixie. The instructions in this book are based on Debian Trixie. You may need to adjust slightly if you use a different Linux distribution.
+The host computer is a PC running any modern Linux distributions. Make sure it supports virtualization as we will use QEMU/KVM to run a Debian Sarge VM. I use Debian Trixie. The instructions in this book are based on Debian Trixie. You may need to adjust them slightly if you use a different Linux distribution.
+
+In Debian Trixie, install the following packages:
+#+begin_src bash
+  sudo apt install virt-manager
+#+end_src
 ** QEMU
 This driver runs on Linux kernel 2.6. The easiest way to develop it is creating a QEMU virtual machine that runs Debian 3.1 Sarge, which contains Linux kernel 2.6.8.
 
 Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download them from [[https://archive.org/details/debian-sarge-r8-32bit][Internet Archive]].
 
+After downloading the ISO files, open =virt-manager= and create a virtual machine follwing the steps below.
+1. Choose "Local install media (ISO image or CDROM)", then click "Forward".
+2. Click "Browse" and choose "debian-31r8-i386-binary-1-CD.iso" file just downloaded. Click "Open". Uncheck "Automatically detect from the installation media/source" and type "generic" to choose "Generic or unknown OS. Usage is not recommended". Click "Forward".
+3. Set "Memory" to 512 MiB[fn:mib] and "CPUs" to 1. Click "Forward".
+4. In "Create a disk image for the virtual machine", set it to 10.0 GiB. Click "Forward".
+5. In "Name", type a name without spaces, such as "Debian_Sarge". Check "Customize configuration before install". Click "Finish".
 
+[fn:mib] A GiB (Gibibyte) or MiB (Mebibyte) is a binary unit of digital information defined by the IEC. Unlike decimal Megabytes (MB) which use powers of 10 ($10^6$ bytes), binary units are based on powers of 2, where $1 \text{ MiB} = 2^{20}$ bytes (1,048,576 bytes). Technical systems like the Linux kernel measure memory this way.
