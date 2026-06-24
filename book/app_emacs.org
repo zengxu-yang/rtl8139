@@ -1,0 +1,41 @@
+* Emacs Setup
+** Code Blocks
+Use =minted= package to generate professional looking code blocks. Enter =sudo apt install python3-pygments=.
+** Coding Style
+The Linux kernel enforces strict coding style. An excellent way to do it is via =clang-format=, which is well supported in Emacs.
+
+Install =clang-format= by =sudo apt install clang-format=.
+
+Add the following in your =~/.emacs= to add packages from MELPA.
+#+begin_src elisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+  ;; and `package-pinned-packages`. Most users will not need or want to do this.
+  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
+#+end_src
+
+With =M-x=, run the following Emacs commands.
+#+begin_src text
+  load-file ~/.emacs
+  package-list-packages
+  package-install<RET>clang-format<RET>
+#+end_src
+Then in =~/.emacs=, add:
+#+begin_src elisp
+  (use-package clang-format
+    :ensure t
+    :config
+    ;; Set the default fallback style globally if no .clang-format file exists
+    (setq clang-format-style "Linux") 
+    
+    :hook ((c-mode c++-mode) . (lambda ()
+                                 (add-hook 'before-save-hook #'clang-format-buffer nil t))))
+#+end_src
+
+In the root directory of your project, enter
+#+begin_src text
+  curl -o .clang-format https://raw.githubusercontent.com/torvalds/linux/master/.clang-format
+#+end_src
+to install the Linux kernel style file. After that, you C files in the current project will automatically use the Linux kernel style upon saving.

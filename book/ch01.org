@@ -1,4 +1,4 @@
-* Overview
+* Introduction
 ** Rationale
 This free book is my notes about my own journey of learning Linux Ethernet driver delveopment. It is shared here because I hope it will be useful for other learners. Linux driver development is often seen as a daunting work and I hope this is a good starting point. I'll keep it hands-on and easy to follow.
 

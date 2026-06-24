@@ -1,0 +1,4 @@
+* Bare Minimum
+We are writing a bare minimum RTL8139 driver. It does nothing but announces its existence as a Loadable Kernel Module (LKM).
+#+begin_src c
+#+end_src

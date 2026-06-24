@@ -27,11 +27,12 @@ $(PDF_OUT): $(SOURCE)
 	@echo "Exporting $(SOURCE) to PDF..."
 	$(EMACS) $(EMACSOPTS) \
 		--visit=$(SOURCE) \
-		--eval '(setq org-latex-pdf-process '"'"'("xelatex -interaction=nonstopmode -output-directory=%o %f" "xelatex -interaction=nonstopmode -output-directory=%o %f"))' \
+		--eval '(progn (setq org-latex-listings '"'"'minted) (setq org-latex-minted-options '"'"'(("frame" "lines") ("fontsize" "\\footnotesize") ("linenos" "true") ("breaklines" "true"))) (setq org-latex-pdf-process '"'"'("xelatex -shell-escape -interaction=nonstopmode -output-directory=%o %f" "xelatex -shell-escape -interaction=nonstopmode -output-directory=%o %f")))' \
 		--funcall org-latex-export-to-pdf
 
 # Clean up build artifacts and LaTeX intermediate debris
 clean:
 	@echo "Cleaning up generated documentation files..."
 	rm -f $(HTML_OUT) $(PDF_OUT)
+	rm -rf _minted-*
 	rm -f *.tex *.aux *.log *.out *.toc *.tex~

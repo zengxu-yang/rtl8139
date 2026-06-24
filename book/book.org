@@ -14,6 +14,7 @@
 #+latex_header: \setsansfont{Linux Biolinum O}
 #+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase]
 #+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{minted}
 
 # ---- Page Layout & Margins ----
 #+latex_header: \usepackage[margin=1.0in]{geometry}
@@ -74,3 +75,11 @@ The complete source files, historical learning logs, and compilation environment
 # ---- Chapters ----
 #+include: "ch01.org"
 #+include: "ch02.org"
+#+include: "ch03.org"
+
+# ---- Appendices ----
+#+begin_export latex
+\appendix
+#+end_export
+
+#+include: "app_emacs.org"
