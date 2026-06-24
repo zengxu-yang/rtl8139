@@ -1,0 +1,13 @@
+CompileFlags:
+  Remove: 
+    - -mpreferred-stack-boundary=*
+    - -fno-unit-at-a-time
+    - -falign-jumps=*
+    - -falign-loops=*
+    - -fomit-frame-pointer
+    - -nostdinc          # <-- Add this to let Clang use its internal headers
+    - -iwithprefix* # <-- Add this to strip the unresolvable GCC flag
+  Add: 
+    - -fms-extensions
+    - -target
+    - i386

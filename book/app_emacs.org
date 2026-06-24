@@ -46,3 +46,7 @@ to download the Linux kernel style file. After that, you C files in the current 
 Tags based code navigation used to be popular, but the modern way is using a Language Server Protocol (LSP) like =clangd=. Emacs natively supports LSP via =eglot=.
 1. Install =clangd= by =sudo apt install clangd=.
 2. Set a c-mode hook in Emacs. Enter =C-h v= then =c-mode-hook=. Add =eglot-ensure= as a hook. After setting it up, =eglot= will be used for every C source file.
+Keyboard shortcuts:
+- To find the definition of a symbol while the cursor is on it, enter =M-.=.
+- To go back, enter =M-,=.
+- To find the definition of any symbol, enter =C-M-.= and enter the name of the symbol.
