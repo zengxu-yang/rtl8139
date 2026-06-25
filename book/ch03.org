@@ -3,46 +3,10 @@
 We are writing a bare minimum RTL8139 driver. It does nothing but announces its existence as a Loadable Kernel Module (LKM). The purpose of writing it is testing whether we can build and run an LKM on the VM.
 
 /File: =src/ch03/rtl8139_driver.c=/
-#+begin_src c
-  #include <linux/init.h>
-  #include <linux/kernel.h>
-  #include <linux/module.h>
-
-  MODULE_LICENSE("GPL");
-  MODULE_AUTHOR("Zengxu Yang");
-  MODULE_DESCRIPTION("A simple RTL8139 PCI Ethernet driver from scratch.");
-
-  static int __init rtl8139_init(void)
-  {
-  	printk(KERN_INFO "rtl8139: Driver module loaded successfully.\n");
-  	return 0;
-  }
-
-  static void __exit rtl8139_exit(void)
-  {
-  	printk(KERN_INFO "rtl8139: Driver module unloaded.\n");
-  }
-
-  module_init(rtl8139_init);
-  module_exit(rtl8139_exit);
-#+end_src
+#+include: "../src/ch03/rtl8139_driver.c" src c
 We are going to build it as an out-of-tree KLM. Below is the makefile used to build it on the VM. This is a standard makefile for this purpose. The real complexity hides in the kernel build system.
 /File: =src/ch03/Makefile=/
-#+begin_src makefile
-  obj-m += rtl8139_driver.o
-
-  KDIR := /lib/modules/$(shell uname -r)/build
-  PWD  := $(shell pwd)
-
-  default:
-  	$(MAKE) -C $(KDIR) M=$(PWD) modules
-
-  lsp:
-  	$(MAKE) -C $(KDIR) M=$(PWD) V=1 -nw > build.log
-
-  clean:
-  	$(MAKE) -C $(KDIR) M=$(PWD) clean
-#+end_src
+#+include: "../src/ch03/Makefile" src makefile
 ** Transferring The Program
 After creating our first driver on the host computer, we will send it to the VM to build and run. See Section [[#sec:miscellaneous]] for details.
 
@@ -116,17 +80,4 @@ The two symbols =__init= and =__exit= have special meanings. They indicate that 
 
 /File: =include/linux/init.h=/
 #+attr_latex: :options firstnumber=42
-#+begin_src c
-  /* These are for everybody (although not all archs will actually
-     discard it in modules) */
-  #define __init		__attribute__ ((__section__ (".init.text")))
-  #define __initdata	__attribute__ ((__section__ (".init.data")))
-  #define __exitdata	__attribute__ ((__section__(".exit.data")))
-  #define __exit_call	__attribute_used__ __attribute__ ((__section__ (".exitcall.exit")))
-
-  #ifdef MODULE
-  #define __exit		__attribute__ ((__section__(".exit.text")))
-  #else
-  #define __exit		__attribute_used__ __attribute__ ((__section__(".exit.text")))
-  #endif
-#+end_src
+#+include: "../../kernel-source-2.6.8/include/linux/init.h" src c :lines "42-54"
