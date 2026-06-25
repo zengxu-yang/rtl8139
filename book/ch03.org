@@ -26,6 +26,7 @@ We are writing a bare minimum RTL8139 driver. It does nothing but announces its 
   module_init(rtl8139_init);
   module_exit(rtl8139_exit);
 #+end_src
+We are going to build it as an out-of-tree KLM. Below is the makefile used to build it on the VM. This is a standard makefile for this purpose. The real complxity hides in the kernel build system.
 /File: =src/ch03/Makefile=/
 #+begin_src makefile
   obj-m += rtl8139_driver.o
@@ -35,6 +36,9 @@ We are writing a bare minimum RTL8139 driver. It does nothing but announces its 
 
   default:
   	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+  lsp:
+  	$(MAKE) -C $(KDIR) M=$(PWD) V=1 -nw > build.log
 
   clean:
   	$(MAKE) -C $(KDIR) M=$(PWD) clean
@@ -63,9 +67,10 @@ You need to install and prepare the kernel source on the VM.
      ln -s /usr/src/kernel-source-2.6.8 /lib/modules/2.6.8-4-386/build
    #+end_src
 5. Copy files in =src/ch03= from the host to =~/rt8139= on the VM.
-6. Build the driver in =~/rtl8139= by =make=.
-7. Run it by =sudo insmod rtl8139_driver.ko=. Run =lsmod | grep 8139= to confirm that your driver is loaded. Then remove it by =sudo rmmod rtl8139=.
-8. See its prints by =dmesg | tail=. You should see lines like:
+** Building and Running The Driver
+1. Build the driver in =~/rtl8139= by =make=.
+2. Run it by =sudo insmod rtl8139_driver.ko=. Run =lsmod | grep 8139= to confirm that your driver is loaded. Then remove it by =sudo rmmod rtl8139=.
+3. See its prints by =dmesg | tail=. You should see lines like:
    #+begin_src text
      rtl8139_driver: no version for "struct_module" found: kernel tainted.
      rtl8139: Driver module loaded successfully.
@@ -105,7 +110,7 @@ There is an issue. Debian Sarge is very old and does not support many LSP utilit
    #+end_src
 6. Now you can read the code on the host computer in Emacs.
 ** Understanding The Code
-This is a bare mininum driver without any functions besides announcing its existence in =dmesg=. Nonetheless, it is the skeleton of the driver with more features. I would highly recommend that you read ULK3, LDD3, and ULNI to understand it fully, especially LDD3.
+This is a bare mininum driver without any advanced functionality besides being a KLM and announcing its existence in =dmesg=. Nonetheless, it is the skeleton of the driver with advanced features. I would highly recommend that you read ULK3, LDD3, and ULNI to understand it fully, especially LDD3.
 
 The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code.
 
