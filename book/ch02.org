@@ -13,7 +13,7 @@ This driver runs on Linux kernel 2.6. The easiest way to develop it is creating 
 Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download them from [[https://archive.org/details/debian-sarge-r8-32bit][Internet Archive]].
 
 *** VM Creation
-After downloading the ISO files, open =virt-manager= and create a virtual machine follwing the steps below.
+After downloading the ISO files, open =virt-manager= and create a virtual machine following the steps below.
 1. Choose "Local install media (ISO image or CDROM)", then click "Forward".
 2. Click "Browse" and choose the "debian-31r8-i386-binary-1-CD.iso" file just downloaded. Click "Open". Uncheck "Automatically detect from the installation media/source" and type "generic" to choose "Generic or unknown OS. Usage is not recommended". Click "Forward".
 3. Set "Memory" to 512 MiB[fn:mib] and "CPUs" to 1. Click "Forward".
