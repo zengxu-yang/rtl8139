@@ -12,10 +12,11 @@
 #+latex_header: \usepackage{fontspec}
 #+latex_header: \setmainfont{Linux Libertine O}
 #+latex_header: \setsansfont{Linux Biolinum O}
-#+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase]
+#+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase, AutoFakeSlant=0.2]
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{minted}
 #+latex_header: \usemintedstyle{perldoc}
+#+latex_header: \setminted{tabsize=8}
 
 # ---- Page Layout & Margins ----
 #+latex_header: \usepackage[margin=1.0in]{geometry}

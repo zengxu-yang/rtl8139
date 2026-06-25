@@ -18,6 +18,7 @@ $(HTML_OUT): $(SOURCE)
 	@echo "Exporting $(SOURCE) to HTML..."
 	$(EMACS) $(EMACSOPTS) \
 		--visit=$(SOURCE) \
+		--eval '(add-hook '"'"'org-export-before-parsing-hook (lambda (backend) (setq tab-width 8) (untabify (point-min) (point-max))))' \
 		--funcall org-html-export-to-html
 
 # Export to PDF via LaTeX (No \part tags - Latexmk Quiet Multi-Pass)
@@ -27,12 +28,12 @@ $(PDF_OUT): $(SOURCE)
 	@echo "Exporting $(SOURCE) to PDF..."
 	$(EMACS) $(EMACSOPTS) \
 		--visit=$(SOURCE) \
-		--eval '(progn (setq org-latex-remove-logfiles nil) (setq org-latex-listings '"'"'minted) (setq org-latex-minted-options '"'"'(("frame" "lines") ("fontsize" "\\footnotesize") ("linenos" "true") ("breaklines" "true"))) (setq org-latex-pdf-process '"'"'("latexmk -xelatex -silent -shell-escape -interaction=nonstopmode -output-directory=%o %f")))' \
+		--eval '(progn (setq org-latex-remove-logfiles nil) (setq org-latex-listings '"'"'minted) (setq org-latex-minted-options '"'"'(("frame" "lines") ("fontsize" "\\footnotesize") ("linenos" "true") ("breaklines" "true"))) (setq org-latex-pdf-process '"'"'("latexmk -xelatex -silent -shell-escape -interaction=nonstopmode -output-directory=%o %f")) (add-hook '"'"'org-export-before-parsing-hook (lambda (backend) (setq tab-width 8) (untabify (point-min) (point-max)))))' \
 		--funcall org-latex-export-to-pdf
 
 # Clean up build artifacts and LaTeX intermediate debris
 clean:
 	@echo "Cleaning up generated documentation files..."
 	rm -f $(HTML_OUT) $(PDF_OUT)
-	rm -rf _minted-*
-	rm -f *.tex *.aux *.log *.out *.toc *.tex~
+	rm -rf _minted*
+	rm -f *.tex *.aux *.log *.out *.toc *.xdv *.fls *.fdb* *.tex~

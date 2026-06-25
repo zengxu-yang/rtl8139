@@ -2,7 +2,7 @@
 ** A Bare Minimum Driver
 We are writing a bare minimum RTL8139 driver. It does nothing but announces its existence as a Loadable Kernel Module (LKM). The purpose of writing it is testing whether we can build and run an LKM on the VM.
 
-/File:/ =src/ch03/rtl8139_driver.c=
+/File: =src/ch03/rtl8139_driver.c=/
 #+begin_src c
   #include <linux/init.h>
   #include <linux/kernel.h>
@@ -26,7 +26,7 @@ We are writing a bare minimum RTL8139 driver. It does nothing but announces its 
   module_init(rtl8139_init);
   module_exit(rtl8139_exit);
 #+end_src
-/File:/ =src/ch03/Makefile=
+/File: =src/ch03/Makefile=/
 #+begin_src makefile
   obj-m += rtl8139_driver.o
 
@@ -104,3 +104,24 @@ There is an issue. Debian Sarge is very old and does not support many LSP utilit
      ]
    #+end_src
 6. Now you can read the code on the host computer in Emacs.
+** Understanding The Code
+This is a bare mininum driver without any functions besides announcing its existence in =dmesg=. Nonetheless, it is the skeleton of the driver with more features. I would highly recommend that you read ULK3, LDD3, and ULNI to understand it fully, especially LDD3.
+
+The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code.
+
+/File: =include/linux/init.h=/
+#+attr_latex: :options firstnumber=42
+#+begin_src c
+  /* These are for everybody (although not all archs will actually
+     discard it in modules) */
+  #define __init		__attribute__ ((__section__ (".init.text")))
+  #define __initdata	__attribute__ ((__section__ (".init.data")))
+  #define __exitdata	__attribute__ ((__section__(".exit.data")))
+  #define __exit_call	__attribute_used__ __attribute__ ((__section__ (".exitcall.exit")))
+
+  #ifdef MODULE
+  #define __exit		__attribute__ ((__section__(".exit.text")))
+  #else
+  #define __exit		__attribute_used__ __attribute__ ((__section__(".exit.text")))
+  #endif
+#+end_src
