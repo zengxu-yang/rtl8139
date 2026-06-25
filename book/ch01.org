@@ -46,3 +46,6 @@ The RTL8139 datasheet is freely available and relatively short (under 60 pages).
 **** Flawless QEMU Emulation
 
 Because the RTL8139 was one of the most widely deployed Ethernet cards of the late 1990s and early 2000s, its hardware dynamics are emulated with extreme precision by QEMU. This allows us to write register-level code against "virtual hardware" that behaves identically to the physical silicon, without requiring you to buy old PCI hardware or risk bricking your host development machine.
+
+** Why Kernel 2.6.8
+Using an older kernel like 2.6.8 in QEMU is a fantastic way to learn. Modern kernels have layers of abstractions (like managed resource APIs) that hide the raw hardware interaction. In 2.6.8, you get a much clearer, hands-on look at how the Linux kernel handles memory mapping and networking.

@@ -89,6 +89,7 @@ The complete source files, historical learning logs, and compilation environment
 #+include: "ch01.org"
 #+include: "ch02.org"
 #+include: "ch03.org"
+#+include: "ch04.org"
 
 # ---- Appendices ----
 #+begin_export latex
