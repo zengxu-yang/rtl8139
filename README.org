@@ -4,6 +4,8 @@
 
 A 100% free, open-source, hands-on passion project documenting the process of writing a monolithic Linux network device driver from the ground up. 
 
+#+HTML: <p align="center"><strong><a href="[https://github.com/zengxu-yang/rtl8139/releases/download/v0.1/book.pdf](https://github.com/zengxu-yang/rtl8139/releases/download/v0.1/book.pdf)">📥 Download the Book (Revision 0.1 PDF)</a></strong></p>
+
 * Overview
 
 This repository is a self-contained learning log turned into a practical, step-by-step guide. The goal is to demystify low-level systems programming by targeting a classic, highly approachable hardware target (*Realtek RTL8139*) inside a streamlined, vintage kernel environment (*Linux 2.6.8*). 
