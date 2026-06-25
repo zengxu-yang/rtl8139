@@ -4,7 +4,9 @@
 
 A 100% free, open-source, hands-on passion project documenting the process of writing a monolithic Linux network device driver from the ground up. 
 
-#+HTML: <p align="center"><strong><a href="[https://github.com/zengxu-yang/rtl8139/releases/download/v0.1/book.pdf](https://github.com/zengxu-yang/rtl8139/releases/download/v0.1/book.pdf)">📥 Download the Book (Revision 0.1 PDF)</a></strong></p>
+#+begin_center
+[[https://github.com/zengxu-yang/rtl8139/releases/download/v0.1/book.pdf][*📥 Download the Book (Revision 0.1 PDF)*]]
+#+end_center
 
 * Overview
 
