@@ -1,0 +1,1 @@
+#+macro: k-path /home/zengxu/Projects/kernel-source-2.6.8

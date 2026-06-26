@@ -1,5 +1,15 @@
+#+setupfile: config.org
 * PCI Bus Registration
 RTL8139 is a PCI Ethernet card, which means that it must be registered on the PCI bus. In this chapter, we will ask our driver to register on the PCI bus.
 
+Compared to the bare minimum driver in Chapter [[#cht:first]], it defines a PCI register =rtl8139_driver=.
+
 /File: =src/ch04/rtl8139_driver.c=/
-#+include: "../src/ch04/rtl8139_driver.c" src c
+#+attr_latex: :options firstnumber=36
+#+include: "../src/ch04/rtl8139_driver.c" src c :lines "36-42"
+
+Its data structure =struct pci_driver= is defined in:
+
+/File: =include/linux/pci.h=/
+#+attr_latex: :options firstnumber=634
+#+include: "kernel-source/include/linux/pci.h" src c :lines "634-647"

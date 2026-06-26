@@ -1,4 +1,7 @@
 * The First Driver
+:PROPERTIES:
+:CUSTOM_ID: cht:first
+:END:
 ** A Bare Minimum Driver
 We are writing a bare minimum RTL8139 driver. It does nothing but announces its existence as a Loadable Kernel Module (LKM). The purpose of writing it is testing whether we can build and run an LKM on the VM.
 

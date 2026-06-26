@@ -1,3 +1,4 @@
+#+setupfile: config.org
 #+title: Linux Ethernet Driver From Scratch
 #+subtitle: Revision {{{revision}}}
 #+author: Zengxu Yang
@@ -40,60 +41,10 @@
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal}
 
 # ---- Copyright / Colophon Page ----
-#+begin_export latex
-\thispagestyle{empty}
-\vspace*{2cm}
-\begin{small}
-#+end_export
-
-*Linux Ethernet Driver From Scratch* \\
-An RTL8139 Learning Journey
-
-*Revision:* {{{revision}}} \\
-© 2026 Zengxu Yang. Some rights reserved.
-
-#+begin_export latex
-\vspace{1cm}
-#+end_export
-
-*Licensing Notices:*
-
-This book is a 100% free, open-source passion project. To accommodate the distinct legal and operational requirements of prose, kernel integrations, and development automation, the contents of this repository are organized under a three-way licensing split:
-
-- *Documentation & Prose:* All instructional text, explanations, and literary content are licensed under the *Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)*. To view a copy of this license, visit [[https://creativecommons.org/licenses/by-sa/4.0/]].
-
-- *Driver Source Code:* All primary C driver files (such as =rtl8139_driver.c=) are licensed under the *GNU General Public License, Version 2 (GPL-2.0-only)*. This copyleft protection ensures compliance and structural compatibility with the upstream Linux Kernel codebase.
-
-- *Build Scripts & Configurations:* All custom supporting files created for this project—including Makefiles, helper shell scripts (like serial data synchronization scripts), and editor setup configurations—are dedicated to the public domain under the *Creative Commons CC0 1.0 Universal Public Domain Dedication (CC0-1.0)*.
-
-  /Note on Third-Party Assets:/ Legally mandated exceptions apply to third-party configuration files imported directly from upstream projects (such as the Linux kernel's =.clang-format= file). These files strictly retain their original upstream licensing (e.g., =GPL-2.0-only=), as explicitly declared within their respective embedded SPDX license identifier headers.
-#+begin_export latex
-\vspace{1cm}
-#+end_export
-
-*Source Repository:* \\
-The complete source files, historical learning logs, and compilation environments for this book can be cloned and audited publicly on GitHub at: \\
-[[https://github.com/zengxu-yang/rtl8139]]
-
-#+begin_export latex
-\vfill
-\textit{First edition electronic printing, June 2026.}
-\end{small}
-\clearpage
-#+end_export
+#+include: "colophon.org"
 
 # ---- Table of Contents ----
 #+toc: headlines 2
 
 # ---- Chapters ----
-#+include: "ch01.org"
-#+include: "ch02.org"
-#+include: "ch03.org"
-#+include: "ch04.org"
-
-# ---- Appendices ----
-#+begin_export latex
-\appendix
-#+end_export
-
-#+include: "app_emacs.org"
+#+include: "chapters.org"
