@@ -1,6 +1,7 @@
 # ---- Copyright / Colophon Page ----
 #+begin_export latex
 \thispagestyle{empty}
+\pdfbookmark[0]{Colophon}{colophon}
 \vspace*{0.5cm}
 \begin{small}
 #+end_export

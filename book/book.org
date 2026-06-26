@@ -40,10 +40,11 @@
 #+latex_header: \usepackage{xcolor}
 #+latex_header: \definecolor{internalblue}{rgb}{0.10, 0.29, 0.56}
 #+latex_header: \definecolor{externalteal}{rgb}{0.00, 0.48, 0.47}
-#+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal}
+#+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal, bookmarksnumbered=true}
 
 #+begin_export latex
 \begin{titlepage}
+    \pdfbookmark[0]{Cover}{cover}
     \newgeometry{margin=0in} % Full bleed execution space for geometry
     
     % Define the color palette
@@ -93,6 +94,10 @@
 #+include: "colophon.org"
 
 # ---- Table of Contents ----
+#+begin_export latex
+\cleardoublepage
+\pdfbookmark[0]{Contents}{toc}
+#+end_export
 #+toc: headlines 2
 
 # ---- Chapters ----
