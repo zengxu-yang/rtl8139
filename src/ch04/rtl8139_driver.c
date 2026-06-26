@@ -42,14 +42,12 @@ static struct pci_driver rtl8139_driver = {
 
 static int __init rtl8139_init(void)
 {
-	printk(KERN_INFO "rtl8139: Driver module loaded successfully.\n");
 	return pci_register_driver(&rtl8139_driver);
 }
 
 static void __exit rtl8139_exit(void)
 {
 	pci_unregister_driver(&rtl8139_driver);
-	printk(KERN_INFO "rtl8139: Driver module unloaded.\n");
 }
 
 module_init(rtl8139_init);

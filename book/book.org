@@ -2,7 +2,7 @@
 #+title: Linux Ethernet Driver From Scratch
 #+subtitle: Revision {{{revision}}}
 #+author: Zengxu Yang
-#+options: toc:nil date:nil ^:nil ':t
+#+options: toc:nil date:nil ^:nil ':t title:nil
 #+latex_class: report-no-parts
 #+latex_compiler: xelatex
 
@@ -15,6 +15,8 @@
 #+latex_header: \setsansfont{Linux Biolinum O}
 #+latex_header: \setmonofont{Fira Code}[Scale=MatchLowercase, AutoFakeSlant=0.2]
 #+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{calc}
 #+latex_header: \usepackage{minted}
 #+latex_header: \usemintedstyle{perldoc}
 #+latex_header: \setminted{tabsize=8}
@@ -39,6 +41,53 @@
 #+latex_header: \definecolor{internalblue}{rgb}{0.10, 0.29, 0.56}
 #+latex_header: \definecolor{externalteal}{rgb}{0.00, 0.48, 0.47}
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal}
+
+#+begin_export latex
+\begin{titlepage}
+    \newgeometry{margin=0in} % Full bleed execution space for geometry
+    
+    % Define the color palette
+    \definecolor{pageyellow}{rgb}{0.98, 0.96, 0.89}  % Soft, premium light yellow/cream
+    \definecolor{darksidebar}{rgb}{0.08, 0.12, 0.18} % Deep technical blue/grey
+    \definecolor{textgold}{rgb}{0.85, 0.65, 0.13}    % Mid-tone accent gold
+    
+    \begin{tikzpicture}[remember picture, overlay]
+        % 1. Paint the entire background canvas first
+        \fill[pageyellow] (current page.north west) 
+            rectangle (current page.south east);
+            
+        % 2. Layer the asymmetric left panel on top of the background
+        \fill[darksidebar] (current page.north west) 
+            rectangle ($(current page.south west) + (2.5in, 0in)$);
+    \end{tikzpicture}
+    
+    % Position the text container securely to the right of the panel
+    \vspace*{2.5in}
+    \hspace*{3.0in}
+    \begin{minipage}{\dimexpr\paperwidth - 3.8in\relax}
+        \raggedright
+        \sffamily
+        
+        {\Huge\bfseries\color{darksidebar} LINUX ETHERNET\\ DRIVER FROM SCRATCH} \\[0.4cm]
+        
+        \noindent\color{textgold}\rule{1.5in}{2pt} \\[0.6cm]
+        
+        {\large\itshape\color{gray} Building an evolutionary RTL8139 network stack framework from the ground up.} \\[1.0in]
+        
+        % Image placeholder for your CC-BY-SA chip graphic
+        \ifx\includegraphics\undefined\else
+            \includegraphics[width=0.5\textwidth]{images/rtl8139.jpg} \\[1.5in]
+        \fi
+        
+        \vfill
+        
+        {\Large\bfseries\color{darksidebar} Zengxu Yang} \\[0.1cm]
+        {\small\color{gray} Release 0.2 (June 2026)}
+    \end{minipage}
+    \restoregeometry
+\end{titlepage}
+\clearpage
+#+end_export
 
 # ---- Copyright / Colophon Page ----
 #+include: "colophon.org"
