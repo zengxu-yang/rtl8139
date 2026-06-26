@@ -5,9 +5,10 @@ CompileFlags:
     - -falign-jumps=*
     - -falign-loops=*
     - -fomit-frame-pointer
-    - -nostdinc          # <-- Add this to let Clang use its internal headers
-    - -iwithprefix* # <-- Add this to strip the unresolvable GCC flag
+    - -nostdinc
+    - -iwithprefix*
   Add: 
     - -fms-extensions
-    - -target
-    - i386
+    - --target=i386-pc-linux-gnu
+    - -I/home/zengxu/Projects/kernel-source-2.6.8/include
+    - -I/home/zengxu/Projects/kernel-source-2.6.8/include/asm-i386/mach-default

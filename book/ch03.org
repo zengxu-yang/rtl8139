@@ -52,12 +52,29 @@ There is an issue. Debian Sarge is very old and does not support many LSP utilit
      [
        {
          "directory": "/home/zengxu/Projects/kernel-source-2.6.8",
-         "command": "gcc -Wp,-MD,/home/zengxu/Projects/rtl8139/src/ch03/.rtl8139_driver.o.d -nostdinc -iwithprefix include -D__KERNEL__ -I/home/zengxu/Projects/kernel-source-2.6.8/include  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -pipe -msoft-float -mpreferred-stack-boundary=2  -march=i386 -I/home/zengxu/Projects/kernel-source-2.6.8/include/asm-i386/mach-default -Os -fomit-frame-pointer    -DMODULE -DKBUILD_BASENAME=rtl8139_driver -DKBUILD_MODNAME=rtl8139_driver -c -o /home/zengxu/Projects/rtl8139/src/ch03/.tmp_rtl8139_driver.o /home/zengxu/Projects/rtl8139/src/ch03/rtl8139_driver.c",
+         "command": "gcc -Wp,-MD,/home/zengxu/Projects/rtl8139/src/ch03/.rtl8139_driver.o.d -nostdinc -iwithprefix include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -pipe -msoft-float -mpreferred-stack-boundary=2  -march=i386 -Iinclude/asm-i386/mach-default -Os -fomit-frame-pointer    -DMODULE -DKBUILD_BASENAME=rtl8139_driver -DKBUILD_MODNAME=rtl8139_driver -c -o /home/zengxu/Projects/rtl8139/src/ch03/.tmp_rtl8139_driver.o /home/zengxu/Projects/rtl8139/src/ch03/rtl8139_driver.c",
          "file": "/home/zengxu/Projects/rtl8139/src/ch03/rtl8139_driver.c"
        }
      ]
    #+end_src
 6. Now you can read the code on the host computer in Emacs.
+** (Optional) Navigate The Kernel Code
+You may want to navigate the 2.6.8 kernel code with eglot. To do that, we need to build the kernel source on the QEMU VM and then convert it to =compile_commands.json=.
+1. Extract the kernel source and build the kernel:
+   #+begin_src bash
+     cd /usr/src
+     sudo tar -jxf kernel-source-2.6.8.tar.bz2
+     sudo chown -R zengxu:zengxu kernel-source-2.6.8
+     cd kernel-source-2.6.8
+     cp /boot/config-2.6.8-4-386 .config
+     make oldconfig
+     make V=1 -w > build.log
+   #+end_src
+2. Send =build.log= to the host computer.
+3. On the host computer, run =python parse_26_log.py= to generate =compile_commands.json=.
+4. Customize and run =paths.sh= to fix paths in =compile_commands.json=.
+5. Copy created =compile_commands.json= to the root of the extracted kernel source on the host computer.
+6. Copy =.clangd= to the root of the extracted kernel source on the host computer.
 ** Understanding The Code
 This is a bare minimum driver without any advanced functionality besides being a KLM and announcing its existence in =dmesg=. Nonetheless, it is the skeleton of the driver with advanced features. I would highly recommend that you read ULK3, LDD3, and ULNI to understand it fully, especially LDD3.
 
