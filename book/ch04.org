@@ -1,6 +1,6 @@
 #+setupfile: config.org
 * PCI Bus Registration
-** Registration Process
+** The Registration Process
 RTL8139 is a PCI Ethernet card, which means that it must be registered on the PCI bus. In this chapter, we will ask our driver to register on the PCI bus.
 
 Compared to the bare minimum driver in Chapter [[#cht:first]], We first notice that its module initialization and exit call some functions like =pci_register_driver((&rtl8139_driver)= and =pci_unregister_driver(&rtl8139_driver)= now.
@@ -8,6 +8,12 @@ Compared to the bare minimum driver in Chapter [[#cht:first]], We first notice t
 /File: =src/ch04/rtl8139_driver.c=/
 #+attr_latex: :options firstnumber=43
 #+include: "../src/ch04/rtl8139_driver.c" src c :lines "43-52"
+
+Function =pci_register_driver()= is defined in
+
+/File: =drivers/pci/pci-driver.c=/
+#+attr_latex: :options firstnumber=389
+#+include: "kernel-source/drivers/pci/pci-driver.c" src c :lines "389-420"
 
 This driver defines a variable =rtl8139_driver= that is the argument of those function calls.
 
