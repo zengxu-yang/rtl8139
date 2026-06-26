@@ -6,7 +6,7 @@
 #+latex_compiler: xelatex
 
 # ---- Single Source of Truth for Versioning ----
-#+macro: revision 0.1 (June 2026)
+#+macro: revision 0.2 (June 2026)
 
 # ---- Typography Configuration ----
 #+latex_header: \usepackage{fontspec}
