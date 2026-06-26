@@ -1,0 +1,5 @@
+* PCI Bus Registration
+RTL8139 is a PCI Ethernet card, which means that it must be registered on the PCI bus. In this chapter, we will ask our driver to register on the PCI bus.
+
+/File: =src/ch04/rtl8139_driver.c=/
+#+include: "../src/ch04/rtl8139_driver.c" src c

@@ -58,7 +58,7 @@ There is an issue. Debian Sarge is very old and does not support many LSP utilit
      ]
    #+end_src
 6. Now you can read the code on the host computer in Emacs.
-** (Optional) Navigate The Kernel Code
+** (Optional) Navigating The Kernel Code
 You may want to navigate the 2.6.8 kernel code with eglot. To do that, we need to build the kernel source on the QEMU VM and then convert it to =compile_commands.json=.
 1. Extract the kernel source and build the kernel:
    #+begin_src bash
@@ -78,7 +78,7 @@ You may want to navigate the 2.6.8 kernel code with eglot. To do that, we need t
 ** Understanding The Code
 This is a bare minimum driver without any advanced functionality besides being a KLM and announcing its existence in =dmesg=. Nonetheless, it is the skeleton of the driver with advanced features. I would highly recommend that you read ULK3, LDD3, and ULNI to understand it fully, especially LDD3.
 
-The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code.
+The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code. Those two functions consist of an absolutely minimum driver as they are normally required by any LKM to function.
 
 /File: =include/linux/init.h=/
 #+attr_latex: :options firstnumber=42

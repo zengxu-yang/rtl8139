@@ -1,1 +1,13 @@
 *~
+*.pdf
+*.log
+*.toc
+*.aux
+*.fdb_latexmk
+*.fls
+*.tex
+*.xdv
+*.swp
+*.cache
+*_minted
+*compile_commands.json
