@@ -38,7 +38,6 @@
 (setq org-latex-minted-options
       '(("frame" "lines")
         ("fontsize" "\\footnotesize")
-        ("linenos" "true")
         ("breaklines" "true")))
 
 (setq org-latex-pdf-process

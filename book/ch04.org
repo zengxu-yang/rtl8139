@@ -6,25 +6,25 @@ RTL8139 is a PCI Ethernet card, which means that it must be registered on the PC
 Compared to the bare minimum driver in Chapter [[#cht:first]], We first notice that its module initialization and exit functions call some functions like =pci_register_driver((&rtl8139_driver)= and =pci_unregister_driver(&rtl8139_driver)= now.
 
 /File: =src/ch04/rtl8139_driver.c=/
-#+attr_latex: :options firstnumber=43
-#+include: "../src/ch04/rtl8139_driver.c" src c :lines "43-52"
+#+attr_latex: :options linenos,firstnumber=43
+#+include: "../src/ch04/rtl8139_driver.c" src c -n 43 :lines "43-52"
 
 Function =pci_register_driver()= is defined in
 
 /File: =drivers/pci/pci-driver.c=/
-#+attr_latex: :options firstnumber=389
-#+include: "kernel-source/drivers/pci/pci-driver.c" src c :lines "389-420"
+#+attr_latex: :options linenos,firstnumber=389
+#+include: "kernel-source/drivers/pci/pci-driver.c" src c -n 389 :lines "389-420"
 
 This driver defines a variable =rtl8139_driver= that is the argument of those function calls.
 
 /File: =src/ch04/rtl8139_driver.c=/
-#+attr_latex: :options firstnumber=36
-#+include: "../src/ch04/rtl8139_driver.c" src c :lines "36-42"
+#+attr_latex: :options linenos,firstnumber=36
+#+include: "../src/ch04/rtl8139_driver.c" src c -n 36 :lines "36-42"
 
 Its data structure =struct pci_driver= is defined in:
 
 /File: =include/linux/pci.h=/
-#+attr_latex: :options firstnumber=634
-#+include: "kernel-source/include/linux/pci.h" src c :lines "634-647"
+#+attr_latex: :options linenos,firstnumber=634
+#+include: "kernel-source/include/linux/pci.h" src c -n 634 :lines "634-647"
 
 Note that it has several function pointers, like =*probe=, =*remove=, etc.

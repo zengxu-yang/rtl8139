@@ -6,7 +6,8 @@
 We are writing a bare minimum RTL8139 driver. It does nothing but announces its existence as a Loadable Kernel Module (LKM). The purpose of writing it is testing whether we can build and run an LKM on the VM.
 
 /File: =src/ch03/rtl8139_driver.c=/
-#+include: "../src/ch03/rtl8139_driver.c" src c
+#+attr_latex: :options linenos
+#+include: "../src/ch03/rtl8139_driver.c" src c -n
 We are going to build it as an out-of-tree KLM. Below is the makefile used to build it on the VM. This is a standard makefile for this purpose. The real complexity hides in the kernel build system.
 /File: =src/ch03/Makefile=/
 #+include: "../src/ch03/Makefile" src makefile
@@ -84,5 +85,5 @@ This is a bare minimum driver without any advanced functionality besides being a
 The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code. Those two functions consist of an absolutely minimum driver as they are normally required by any LKM to function.
 
 /File: =include/linux/init.h=/
-#+attr_latex: :options firstnumber=42
-#+include: "../../kernel-source-2.6.8/include/linux/init.h" src c :lines "42-54"
+#+attr_latex: :options linenos,firstnumber=42
+#+include: "../../kernel-source-2.6.8/include/linux/init.h" src c -n 42 :lines "42-54"
