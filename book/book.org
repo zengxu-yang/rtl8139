@@ -1,10 +1,16 @@
 #+setupfile: config.org
+#+setupfile: https://fniessen.github.io/org-html-themes/org/html-theme-readtheorg.setup
 #+title: Linux Ethernet Driver From Scratch
 #+subtitle: Revision {{{revision}}}
 #+author: Zengxu Yang
 #+options: toc:nil date:nil ^:nil ':t title:nil
 #+latex_class: report-no-parts
 #+latex_compiler: xelatex
+
+# HTML tweaks
+#+html_head: <style>
+#+html_head: body { zoom: 1.20; } /* 20% larger */
+#+html_head: </style>
 
 # ---- Single Source of Truth for Versioning ----
 #+macro: revision 0.2 (June 2026)

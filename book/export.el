@@ -1,4 +1,20 @@
+(require 'package)
+(setq package-user-dir "~/.emacs.d/elpa") ; Ensure it points to your user packages
+(package-activate-all)
+
+;; Dynamically add all system ELPA source directories to prevent version-lock
+(let ((default-directory "/usr/share/emacs/site-lisp/elpa-src/"))
+  (when (file-directory-p default-directory)
+    (normal-top-level-add-subdirs-to-load-path)))
+
+(require 'htmlize)
 (require 'ox-latex)
+
+;; Whitelist the ReadTheOrg theme domain for remote downloads
+(setq org-safe-remote-resources '("https://fniessen\\.github\\.io/.*"))
+
+;; Tell Org to export clean CSS classes instead of looking up Emacs face colors
+(setq org-html-htmlize-output-type 'css)
 
 ;; ---- Create a local symlink for layout dependencies natively ----
 (let ((symlink-path "kernel-source")
