@@ -26,10 +26,12 @@
 #+latex_header: \usepackage{minted}
 #+latex_header: \usemintedstyle{perldoc}
 #+latex_header: \setminted{tabsize=8}
+#+latex_header: \usepackage[inkscapelatex=false]{svg}
 
 # ---- Page Layout & Margins ----
 #+latex_header: \usepackage[margin=1.0in]{geometry}
 #+latex_header: \usepackage{parskip}
+#+latex_header: \usepackage{float}
 
 # ---- Force Inline Monospace to Wrap Safely at Punctuation ----
 #+latex_header: \usepackage{xpatch}
@@ -49,9 +51,9 @@
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=internalblue, urlcolor=externalteal, bookmarksnumbered=true}
 
 #+begin_export latex
+\newgeometry{margin=0in} % Full bleed execution space for geometry
 \begin{titlepage}
     \pdfbookmark[0]{Cover}{cover}
-    \newgeometry{margin=0in} % Full bleed execution space for geometry
     
     % Define the color palette
     \definecolor{pageyellow}{rgb}{0.98, 0.96, 0.89}  % Soft, premium light yellow/cream
@@ -91,8 +93,8 @@
         {\Large\bfseries\color{darksidebar} Zengxu Yang} \\[0.1cm]
         {\small\color{gray} Release 0.2 (June 2026)}
     \end{minipage}
-    \restoregeometry
 \end{titlepage}
+\restoregeometry
 \clearpage
 #+end_export
 
