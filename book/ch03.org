@@ -1,3 +1,4 @@
+#+setupfile: config.org
 * The First Driver
 :PROPERTIES:
 :CUSTOM_ID: cht:first
@@ -84,6 +85,47 @@ This is a bare minimum driver without any advanced functionality besides being a
 
 The two symbols =__init= and =__exit= have special meanings. They indicate that functions =rtl8139_init= and =rtl8139_exit= are put in section =.init.text= and =.exit.text= instead of the standard =.text= for normal code. Those two functions consist of an absolutely minimum driver as they are normally required by any LKM to function.
 
+The real meaning of following lines depends on whether they are built into the kernel (=obj-y=) or as a kernel module (=obj-m=).
+
 /File: =include/linux/init.h=/
-#+attr_latex: :options linenos,firstnumber=42
-#+include: "../../kernel-source-2.6.8/include/linux/init.h" src c -n 42 :lines "42-54"
+#+attr_latex: :options linenos,firstnumber=189
+#+include: "kernel-source/include/linux/init.h" src c -n 189 :lines "189-200"
+
+These expand to
+#+begin_src c
+  static inline initcall_t __inittest(void)        
+  { 
+      return rtl8139_init; 
+  }                    
+  int init_module(void) __attribute__((alias("rtl8139_init")));
+
+  static inline exitcall_t __exittest(void)        
+  { 
+      return rtl8139_exit; 
+  }                    
+  void cleanup_module(void) __attribute__((alias("rtl8139_exit")));
+#+end_src
+
+=__inittest= serves as a type checker that detects any incorrect type of your module initialization function =rtl8139_init= because the compiler can detect whether the return type is =initcall_t= during driver compilation.
+
+Next it sets =init_module= as an alias of =rtl8139_init= for the kernel to load. Because =rtl8139_init= is just a user defined function name in the driver, the kernel does not know its name in advance, so it creates a symbol alias of it called =init_module= and loads it instead.
+
+#+begin_src text
+  $ objdump -t rtl8139_driver.ko | grep -E "init_module|rtl8139_init"
+  00000000 l     F .init.text	0000000c rtl8139_init
+  00000000 g     F .init.text	0000000c init_module
+#+end_src
+
+Here we can see that they share the same memory offset =00000000=, the same type =F= (function), the same section =.init.text=, the same size =0000000c= (12).
+
+This works for =rtl8139_exit= exactly the same way.
+
+When you run =insmod rtl8139_driver.ko=, the user space utility =insmod= calls =init_module=, which is a system call that actually loads the kernel mode into kernel space and adds your driver module to a global =modules= list.
+
+#+begin_comment
+They are expanded to
+#+begin_src c
+  static initcall_t __initcall_rtl8139_init __attribute_used__ \
+      __attribute__((__section__(".initcall6.init"))) = rtl8139_init;
+#+end_src
+#+end_comment

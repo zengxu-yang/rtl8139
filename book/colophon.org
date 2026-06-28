@@ -2,7 +2,7 @@
 #+begin_export latex
 \thispagestyle{empty}
 \pdfbookmark[0]{Colophon}{colophon}
-\vspace*{0.5cm}
+\vspace*{2cm}
 \begin{small}
 #+end_export
 
@@ -19,19 +19,13 @@ Some rights reserved.
 
 *Licensing Notices:* 
 
-This book is a 100% free, open-source passion project. 
-To accommodate the distinct legal and operational requirements of prose, kernel integrations, and development automation, the contents of this repository are organized under a three-way licensing split: 
+This is a free, open-source project organized under a three-way licensing split: 
 
-- *Documentation & Prose:* All instructional text, explanations, and literary content are licensed under the *Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA-4.0)*. 
-To view a copy of this license, visit [[https://creativecommons.org/licenses/by-sa/4.0/]].
+- *Documentation & Prose:* Licensed under *CC-BY-SA-4.0*. View at [[https://creativecommons.org/licenses/by-sa/4.0/]].
+- *Driver Source Code:* Licensed under *GPL-2.0-only* for Linux kernel compatibility.
+- *Build Scripts & Configurations:* Dedicated to the public domain under *CC0-1.0*.
 
-- *Driver Source Code:* All primary C driver files (such as =rtl8139_driver.c=) are licensed under the *GNU General Public License, Version 2 (GPL-2.0-only)*.
-This copyleft protection ensures compliance and structural compatibility with the upstream Linux Kernel codebase.
-
-- *Build Scripts & Configurations:* All custom supporting files created for this project—including Makefiles, helper shell scripts (like serial data synchronization scripts), and editor setup configurations—are dedicated to the public domain under the *Creative Commons CC0 1.0 Universal Public Domain Dedication (CC0-1.0)*.
-
-/Note on Third-Party Assets:/ Legally mandated exceptions apply to third-party configuration files imported directly from upstream projects (such as the Linux kernel's =.clang-format= file).
-These files strictly retain their original upstream licensing (e.g., =GPL-2.0-only=), as explicitly declared within their respective embedded SPDX license identifier headers.
+/Note on Third-Party Assets:/ Upstream configuration files (e.g., =.clang-format=) strictly retain their original licensing as declared in their SPDX headers.
 
 #+begin_export latex
 \vspace{1cm}

@@ -9,7 +9,7 @@ Compared to the bare minimum driver in Chapter [[#cht:first]], We first notice t
 #+attr_latex: :options linenos,firstnumber=43
 #+include: "../src/ch04/rtl8139_driver.c" src c -n 43 :lines "43-52"
 
-Function =pci_register_driver()= is defined in
+Function =pci_register_driver()= initializes various members of the generic driver it embeds, such as =name=, =bus=, =probe=, =remove=.
 
 /File: =drivers/pci/pci-driver.c=/
 #+attr_latex: :options linenos,firstnumber=389
@@ -28,3 +28,39 @@ Its data structure =struct pci_driver= is defined in:
 #+include: "kernel-source/include/linux/pci.h" src c -n 634 :lines "634-647"
 
 Note that it has several function pointers, like =*probe=, =*remove=, etc.
+
+We can also see that it has a member =driver= which is of =struct device_driver= type, which also has several function pointers, like =*probe=, =*remove=, etc.
+
+/File: =include/linux/device.h=/
+#+attr_latex: :options linenos,firstnumber=102
+#+include: "kernel-source/include/linux/device.h" src c -n 102 :lines "102-116"
+
+Bus match is defined here. It calls =pci_bus_match()= to match its device ID on the PCI bus.
+
+/File: =drivers/base/bus.c=/
+#+attr_latex: :options linenos,firstnumber=252
+#+include: "kernel-source/drivers/base/bus.c" src c -n 252 :lines "252-282"
+
+The vendor ID and device ID are specified in the driver in array =rtl8139_pci_tbl=. Here our probe function is s stub, doing nothing besides printing a message showing matched hardware.
+
+/File: =src/ch04/rtl8139_driver.c=/
+#+attr_latex: :options linenos,firstnumber=11
+#+include: "../src/ch04/rtl8139_driver.c" src c -n 11 :lines "11-28"
+** Probing
+The driver probes by calling =rtl8139_pci_probe()= during the PCI registration. But it does not call it directly. As can be seen, =pci_register_driver= actually calls =driver_register(&drv->driver)= which passes only the =driver= member of =struct pci_driver=. How does it know and call =rtl8139_pci_probe()=? The secret is a brilliant design in Linux called =container_of=. By using:
+
+/File: =include/linux/pci.h=/
+#+attr_latex: :options linenos,firstnumber=648
+#+include: "kernel-source/include/linux/pci.h" src c -n 648 :lines "648-649"
+It automatically finds the location of the PCI driver by =container_of= even if only the generic driver is passed to it.
+
+#+caption: Finding PCI Driver
+#+name: fig:find_pci_driver
+#+attr_latex: :width 0.7\textwidth :placement [H]
+[[./images/find-driver.svg]]
+
+In =pci_device_probe()=, it finally calls our probe function =rtl8139_pci_probe()= in =pci_device_probe_static=, which is called in =__pci_device_probe()=.
+
+/File: =drivers/pci/pci-driver.c=/
+#+attr_latex: :options linenos,firstnumber=268
+#+include: "kernel-source/drivers/pci/pci-driver.c" src c -n 268 :lines "268-283"

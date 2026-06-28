@@ -10,7 +10,7 @@ In Debian Trixie, install the following packages:
 *** Preparation
 This driver runs on Linux kernel 2.6. The easiest way to develop it is creating a QEMU virtual machine that runs Debian 3.1 Sarge, which contains Linux kernel 2.6.8.
 
-Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download them from [[https://archive.org/details/debian-sarge-r8-32bit][Internet Archive]].
+Before installing a VM, we need to first download Debian Sarge ISO files for the IA-32 platform. You can download binary ISO files from [[https://archive.org/details/debian-sarge-r8-32bit][here]] and optionally download the source ISO files from [[https://archive.org/details/debian_3.1r8_source][here]]. The source ISO files are not required by this book.
 
 *** VM Creation
 After downloading the ISO files, open =virt-manager= and create a virtual machine following the steps below.
@@ -75,7 +75,8 @@ Optionally, you can install a GUI desktop environment.
 It is almost done. There are still some miscellaneous configurations.
 
 1. You need to make your account a sudoer in order to use =sudo=. First run =su -= and enter the root password. Then edit =/etc/sudoers= with your favorite editor. Add a line like =zengxu ALL=(ALL) ALL= where you should replace =zengxu= with your account name.
-2. Blacklist the builtin RTL8139 driver so that you can work on your own driver without worrying about conflicts.
+2. You can add extra DVD ISOs to =/etc/apt/sources.list= by running =sudo apt-cdrom add= loading extra ISO files.
+3. Blacklist the builtin RTL8139 driver so that you can work on your own driver without worrying about conflicts.
    1. Unload the builtin driver.
       #+begin_src text
 	sudo rmmod 8139too
@@ -92,7 +93,7 @@ It is almost done. There are still some miscellaneous configurations.
 	8139cp
       #+end_src
    4. Reboot the VM and confirm that the builtin driver is blacklisted by =lsmod | grep 8139=.
-3. Since we blacklisted the builtin Ethernet driver, the VM does not have a network connection. To share files between the host computer and the VM, we will use a virtual USB drive.
+4. Since we blacklisted the builtin Ethernet driver, the VM does not have a network connection. To share files between the host computer and the VM, we will use a virtual USB drive.
    1. On the host computer, run =dd if=/dev/zero of=/home/zengxu/Projects/shared_storage.img bs=1M count=512= to create a 512 MiB image.
    2. Run =sudo virsh attach-disk Debian_Sarge /home/zengxu/Projects/shared_storage.img sda --driver qemu --type disk --subdriver raw --targetbus usb --live= to create a live USB drive on the VM.
    3. Run =dmesg | tail -n 20= to make sure it is detected by the kernel on the VM. You should also see a device file =/dev/sda=.
