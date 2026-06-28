@@ -1,5 +1,8 @@
 #+setupfile: config.org
 * PCI Bus Registration
+:PROPERTIES:
+:CUSTOM_ID: cht:register
+:END:
 ** The Registration Process
 RTL8139 is a PCI Ethernet card, which means that it must be registered on the PCI bus. In this chapter, we will ask our driver to register on the PCI bus.
 
@@ -9,7 +12,7 @@ Compared to the bare minimum driver in Chapter [[#cht:first]], We first notice t
 #+attr_latex: :options linenos,firstnumber=43
 #+include: "../src/ch04/rtl8139_driver.c" src c -n 43 :lines "43-52"
 
-Function =pci_register_driver()= initializes various members of the generic driver it embeds, such as =name=, =bus=, =probe=, =remove=.
+Function =pci_register_driver()= initializes various members of the generic driver it embeds, such as =name=, =bus=, =probe=, =remove= to be driver or PCI related objects.
 
 /File: =drivers/pci/pci-driver.c=/
 #+attr_latex: :options linenos,firstnumber=389
@@ -27,15 +30,17 @@ Its data structure =struct pci_driver= is defined in:
 #+attr_latex: :options linenos,firstnumber=634
 #+include: "kernel-source/include/linux/pci.h" src c -n 634 :lines "634-647"
 
-Note that it has several function pointers, like =*probe=, =*remove=, etc.
+Note that the PCI driver structure has several function pointers, like =*probe=, =*remove=, etc.
 
-We can also see that it has a member =driver= which is of =struct device_driver= type, which also has several function pointers, like =*probe=, =*remove=, etc.
+We can also see that it has a member =driver= which is of =struct device_driver= type, which also has several function pointers, like =*probe=, =*remove=, etc. This represents a generic driver structure that can be used for any types of drivers.
 
 /File: =include/linux/device.h=/
 #+attr_latex: :options linenos,firstnumber=102
 #+include: "kernel-source/include/linux/device.h" src c -n 102 :lines "102-116"
 
-Bus match is defined here. It calls =pci_bus_match()= to match its device ID on the PCI bus.
+The PCI driver register function calls =bus_add_driver= to try to add the driver.
+** Probing
+To add a driver and run the probe function in the driver, it must match the device on the PCI bus. =bus_add_driver= calls =pci_bus_match()= to match its device ID on the PCI bus.
 
 /File: =drivers/base/bus.c=/
 #+attr_latex: :options linenos,firstnumber=252
@@ -46,7 +51,7 @@ The vendor ID and device ID are specified in the driver in array =rtl8139_pci_tb
 /File: =src/ch04/rtl8139_driver.c=/
 #+attr_latex: :options linenos,firstnumber=11
 #+include: "../src/ch04/rtl8139_driver.c" src c -n 11 :lines "11-28"
-** Probing
+
 The driver probes by calling =rtl8139_pci_probe()= during the PCI registration. But it does not call it directly. As can be seen, =pci_register_driver= actually calls =driver_register(&drv->driver)= which passes only the =driver= member of =struct pci_driver=. How does it know and call =rtl8139_pci_probe()=? The secret is a brilliant design in Linux called =container_of=. By using:
 
 /File: =include/linux/pci.h=/
@@ -54,10 +59,12 @@ The driver probes by calling =rtl8139_pci_probe()= during the PCI registration. 
 #+include: "kernel-source/include/linux/pci.h" src c -n 648 :lines "648-649"
 It automatically finds the location of the PCI driver by =container_of= even if only the generic driver is passed to it.
 
+#+begin_comment
 #+caption: Finding PCI Driver
 #+name: fig:find_pci_driver
 #+attr_latex: :width 0.7\textwidth :placement [H]
 [[./images/find-driver.svg]]
+#+end_comment
 
 In =pci_device_probe()=, it finally calls our probe function =rtl8139_pci_probe()= in =pci_device_probe_static=, which is called in =__pci_device_probe()=.
 
